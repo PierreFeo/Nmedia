@@ -8,4 +8,5 @@
     <string name="description_post_share_button">Кнопка поделиться поста</string>
     <string name="description_post_views_button">Кнопка просмотры поста</string>
     <string name="description_post_likes_button">Кнопка нравится поста</string>
+    <string name="over_a_billion">Более миллиарда</string>
 </resources>

@@ -7,8 +7,6 @@ import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.logics.Logics
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-
-
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         binding.share.setOnClickListener {
             viewModel.share() }
     }
-
 
 }
 

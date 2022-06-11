@@ -7,4 +7,5 @@
     <string name="description_post_share_button">button_share</string>
     <string name="description_post_views_button">button_views</string>
     <string name="description_post_likes_button">button_likes</string>
+    <string name="over_a_billion">Over a billion</string>
 </resources>

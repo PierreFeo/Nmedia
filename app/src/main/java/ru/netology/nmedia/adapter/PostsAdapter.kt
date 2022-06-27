@@ -2,7 +2,9 @@ package ru.netology.nmedia.adapter
 
 import android.content.res.Resources
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,13 +12,12 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.logics.Logics
+import ru.netology.nmedia.util.hideKeyboard
+import ru.netology.nmedia.util.showKeyboard
 
-typealias OnLikeListener = (post: Post) -> Unit
-typealias OnShareListener = (post: Post) -> Unit
 
 internal class PostsAdapter(
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    private val interactionLisiner: PostInteractionLisiner
 ) : ListAdapter<Post, PostViewHolder>(DiffCallBack) {
 
 //    var list = emptyList<Post>()
@@ -27,7 +28,7 @@ internal class PostsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(view, onLikeListener, onShareListener)
+        return PostViewHolder(view, interactionLisiner)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -50,20 +51,45 @@ internal class PostsAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    private val lisiner: PostInteractionLisiner,
 ) : RecyclerView.ViewHolder(binding.root) {
+
+
     fun bind(post: Post) = with(binding) {
         author.text = post.author
         published.text = post.published
         content.text = post.content
+        avatar.setImageResource(R.drawable.ic_launcher_foreground) //TODO will delete
         likes.setImageResource(Logics.likesIcon(post.likeByMe))
-        likes.setOnClickListener { onLikeListener(post) }
-        share.setOnClickListener { onShareListener(post) }
+        likes.setOnClickListener { lisiner.onLikeClicked(post) }
+        share.setOnClickListener { lisiner.onShareClicked(post) }
         likesCount.text = Logics.numbersConvector(post.likesCount)
         shareCount.text = Logics.numbersConvector(post.shareCount)
+
+        menu.setOnClickListener {
+            PopupMenu(it.context, it).apply {
+                inflate(R.menu.options_post)
+                setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.remove_button -> {
+                            lisiner.onRemoveClicked(post)
+                            true
+                        }
+                        R.id.edit_button -> {
+                            lisiner.onEditClicked(post)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }.show()
+        }
+
     }
 }
+
+
+
 
 
 

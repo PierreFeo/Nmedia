@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.logics.Logics
+import ru.netology.nmedia.util.focusAndShowKeyboard
 import ru.netology.nmedia.util.hideKeyboard
 import ru.netology.nmedia.util.showKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                 requestFocus()
                 setText(post.content)
                 setSelection(length())
+                focusAndShowKeyboard()
 
 
                 with(binding) {

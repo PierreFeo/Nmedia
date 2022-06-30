@@ -40,17 +40,15 @@
         app:layout_constraintTop_toTopOf="@id/avatar"
         tools:text="@sample/posts.json/data/author" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
+        style="@style/Widget.AppTheme.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_menu_button"
+        app:icon="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -80,72 +78,39 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content,barrier" />
 
-
-    <TextView
-        android:id="@+id/likes_count"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/likes"
-        app:layout_constraintStart_toEndOf="@id/likes"
-        app:layout_constraintTop_toTopOf="@id/likes"
-        tools:text="@sample/posts.json/data/likes" />
-
-    <TextView
-        android:id="@+id/share_count"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/likes"
-        app:layout_constraintStart_toEndOf="@id/share"
-        app:layout_constraintTop_toTopOf="@id/likes_count"
-        tools:text="@sample/posts.json/data/share" />
-
-    <ImageButton
-        android:id="@+id/share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_post_share_button"
-        app:layout_constraintStart_toEndOf="@id/likes_count"
-        app:layout_constraintTop_toTopOf="@id/likes"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
-
-    <ImageButton
+    <ImageView
         android:id="@+id/views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_views_button"
-        app:layout_constraintEnd_toStartOf="@id/views_count"
-        app:layout_constraintTop_toBottomOf="@id/barrier_bot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/share"
+        app:layout_constraintBottom_toBottomOf="@id/share"
+        android:layout_marginEnd="@dimen/common_spacing"
         app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/likes"
+        style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_likes_button"
+        app:icon="@drawable/ic_like_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_bot"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+        tools:text="@sample/posts.json/data/likes"
+        android:checkable="true"/>
 
-    <TextView
-        android:id="@+id/views_count"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share"
+        style="@style/Widget.AppTheme.IconButton"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        app:layout_constraintBottom_toBottomOf="@id/views"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/barrier_bot"
-        tools:text="@sample/posts.json/data/views" />
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_post_share_button"
+        android:text="@sample/posts.json/data/likes"
+        app:icon="@drawable/ic_baseline_share_24"
+        app:layout_constraintStart_toEndOf="@id/likes"
+        app:layout_constraintTop_toTopOf="@id/likes" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

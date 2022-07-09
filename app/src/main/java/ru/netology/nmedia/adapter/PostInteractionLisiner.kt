@@ -9,4 +9,5 @@ interface PostInteractionLisiner {
     fun onSaveClicked(content:String)
     fun onEditClicked(post: Post)
     fun onCloseClicked()
+    fun onVideoClicked(post: Post)
 }

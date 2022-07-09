@@ -57,15 +57,25 @@ class PostViewHolder(
 
 
     fun bind(post: Post) = with(binding) {
+        videoViewGroup.visibility = View.VISIBLE
         author.text = post.author
         published.text = post.published
         content.text = post.content
         avatar.setImageResource(R.drawable.avatar) //TODO will delete
         likes.isChecked = post.likeByMe
+
+        if (post.videoContent.isNullOrBlank()) {
+            videoViewGroup.visibility = View.GONE
+
+        }
         likes.text = Logics.numbersConvector(post.likesCount)
         share.text = Logics.numbersConvector(post.shareCount)
+        urlVideoView.text = post.videoContent
+        videoPreviewView.setImageResource(R.mipmap.youtobe_banner_foreground)
         likes.setOnClickListener { lisiner.onLikeClicked(post) }
         share.setOnClickListener { lisiner.onShareClicked(post) }
+        playMediaButtonView.setOnClickListener { lisiner.onVideoClicked(post) }
+
 
 
         menu.setOnClickListener {

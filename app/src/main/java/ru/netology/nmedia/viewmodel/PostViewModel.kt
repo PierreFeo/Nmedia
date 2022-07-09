@@ -8,6 +8,7 @@ import ru.netology.nmedia.adapter.PostInteractionLisiner
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
+import ru.netology.nmedia.util.SingleLiveEvent
 
 private val empty = Post(
     id = 0L,
@@ -22,12 +23,17 @@ private val empty = Post(
 class PostViewModel : ViewModel(), PostInteractionLisiner {
 
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
+    val shareEvent = SingleLiveEvent<Post>()
     val currentPost = MutableLiveData<Post?>(null)
     val data = repository.getAll()
+    val videoClickedEvent = SingleLiveEvent<Post>()
 
 
     override fun onLikeClicked(post: Post) = repository.likePostById(post.id)
-    override fun onShareClicked(post: Post) = repository.sharePostById(post.id)
+    override fun onShareClicked(post: Post) {
+        shareEvent.value = post
+        repository.sharePostById(post.id)
+    }
     override fun onRemoveClicked(post: Post) = repository.removePostById(post.id)
     override fun onSaveClicked(content: String) {
         if (content.isBlank()) return
@@ -43,5 +49,9 @@ class PostViewModel : ViewModel(), PostInteractionLisiner {
 
     override fun onCloseClicked() {
         currentPost.value = null
+    }
+
+   override fun onVideoClicked(post: Post){
+        videoClickedEvent.value = post
     }
 }

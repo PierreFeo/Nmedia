@@ -66,7 +66,6 @@ class PostViewHolder(
 
         if (post.videoContent.isNullOrBlank()) {
             videoViewGroup.visibility = View.GONE
-
         }
         likes.text = Logics.numbersConvector(post.likesCount)
         share.text = Logics.numbersConvector(post.shareCount)
@@ -75,6 +74,7 @@ class PostViewHolder(
         likes.setOnClickListener { lisiner.onLikeClicked(post) }
         share.setOnClickListener { lisiner.onShareClicked(post) }
         playMediaButtonView.setOnClickListener { lisiner.onVideoClicked(post) }
+        videoPreviewView.setOnClickListener { lisiner.onVideoClicked(post) }
 
 
 

@@ -12,6 +12,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.logics.Logics
+import ru.netology.nmedia.util.focusAndShowKeyboard
 import ru.netology.nmedia.util.hideKeyboard
 import ru.netology.nmedia.util.showKeyboard
 
@@ -59,12 +60,13 @@ class PostViewHolder(
         author.text = post.author
         published.text = post.published
         content.text = post.content
-        avatar.setImageResource(R.drawable.ic_launcher_foreground) //TODO will delete
-        likes.setImageResource(Logics.likesIcon(post.likeByMe))
+        avatar.setImageResource(R.drawable.avatar) //TODO will delete
+        likes.isChecked = post.likeByMe
+        likes.text = Logics.numbersConvector(post.likesCount)
+        share.text = Logics.numbersConvector(post.shareCount)
         likes.setOnClickListener { lisiner.onLikeClicked(post) }
         share.setOnClickListener { lisiner.onShareClicked(post) }
-        likesCount.text = Logics.numbersConvector(post.likesCount)
-        shareCount.text = Logics.numbersConvector(post.shareCount)
+
 
         menu.setOnClickListener {
             PopupMenu(it.context, it).apply {

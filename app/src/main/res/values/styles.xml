@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Widget.AppTheme.LikeButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <!-- My custom style LikeButtonIcon. -->
+        <item name="iconTint">@color/like_checkbox_tint</item>
+        <item name="android:minWidth">@dimen/icon_button_min_size</item>
+        <item name="android:minHeight">@dimen/icon_button_min_size</item>
+        <item name="android:paddingStart">@dimen/icon_button_padding</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.AppTheme.IconButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <!-- My custom style icon. -->
+        <item name="iconTint">?attr/colorControlNormal</item>
+        <item name="android:minWidth">@dimen/icon_button_min_size</item>
+        <item name="android:minHeight">@dimen/icon_button_min_size</item>
+        <item name="android:paddingStart">@dimen/icon_button_padding</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:paddingEnd">@dimen/icon_button_padding</item>
+
+    </style>
+
+</resources>

@@ -24,6 +24,16 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
+        val activityLauncher =
+            registerForActivityResult(NewPostActivity.PostResultContract) { result: String? ->
+                result ?: return@registerForActivityResult
+                viewModel.onSaveClicked(result)
+            }
+
+        viewModel.postContentToScreenEvent.observe(this) {
+            activityLauncher.launch(it.content)
+        }
+
         viewModel.shareEvent.observe(this) {
             val intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -35,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(shareIntent)
         }
 
+
         viewModel.videoClickedEvent.observe(this) {
             it.videoContent ?: return@observe
             val newIntent = Intent(
@@ -45,25 +56,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val activityLauncher =
-            registerForActivityResult(NewPostActivity.PostResultContract) { result: String? ->
-                result ?: return@registerForActivityResult
-                viewModel.onSaveClicked(result)
-            }
-
         binding.fab.setOnClickListener {
             activityLauncher.launch("")
-
         }
-        viewModel.currentPost.observe(this) { post ->
-            if (post == null) {
-                return@observe
-            }
-            activityLauncher.launch(post.content)
-
-        }
-
-
     }
 
 

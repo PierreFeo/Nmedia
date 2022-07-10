@@ -1,12 +1,16 @@
 package ru.netology.nmedia.viewmodel
 
+import android.app.Application
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostInteractionLisiner
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.repository.PostRepository
+import ru.netology.nmedia.repository.PostRepositoryFileImpl
 import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 
@@ -20,20 +24,24 @@ private val empty = Post(
     shareCount = 0
 )
 
-class PostViewModel : ViewModel(), PostInteractionLisiner {
+class PostViewModel(application: Application) : AndroidViewModel(application),
+    PostInteractionLisiner {
 
-    private val repository: PostRepository = PostRepositoryInMemoryImpl()
+    private val repository: PostRepository = PostRepositoryFileImpl(application)
     val shareEvent = SingleLiveEvent<Post>()
     val currentPost = MutableLiveData<Post?>(null)
     val data = repository.getAll()
     val videoClickedEvent = SingleLiveEvent<Post>()
+    val postContentToScreenEvent = SingleLiveEvent<Post>()
 
 
     override fun onLikeClicked(post: Post) = repository.likePostById(post.id)
+
     override fun onShareClicked(post: Post) {
         shareEvent.value = post
         repository.sharePostById(post.id)
     }
+
     override fun onRemoveClicked(post: Post) = repository.removePostById(post.id)
     override fun onSaveClicked(content: String) {
         if (content.isBlank()) return
@@ -45,13 +53,14 @@ class PostViewModel : ViewModel(), PostInteractionLisiner {
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
+        postContentToScreenEvent.value = post
     }
 
     override fun onCloseClicked() {
         currentPost.value = null
     }
 
-   override fun onVideoClicked(post: Post){
+    override fun onVideoClicked(post: Post) {
         videoClickedEvent.value = post
     }
 }

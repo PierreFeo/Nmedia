@@ -7,12 +7,17 @@
     <string name="description_post_share_button">button_share</string>
     <string name="description_post_views_button">button_views</string>
     <string name="description_post_likes_button">button_likes</string>
+    <string name="description_play_youtoube_button">button_play_youtoube</string>
+    <string name="description_post_save">Save</string>
     <string name="over_a_billion">Over a billion</string>
     <string name="remove">Remove</string>
     <string name="post_text">enter text here</string>
     <string name="description_post_like">post_like_button</string>
     <string name="Edit">Edit</string>
     <string name="EmptyContent">Content cannot be empty</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="error_empty_content">Content can\'t be empty</string>
+    <string name="add_post">Add post</string>
     />
 
 

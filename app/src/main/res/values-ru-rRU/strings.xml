@@ -8,12 +8,17 @@
     <string name="description_post_share_button">Кнопка поделиться поста</string>
     <string name="description_post_views_button">Кнопка просмотры поста</string>
     <string name="description_post_likes_button">Кнопка нравится поста</string>
+    <string name="description_play_youtoube_button">Кнопка воспроизвести ютуб</string>
+    <string name="description_post_save">Сохранить</string>
     <string name="description_post_like">Кнопка добавить</string> />
     <string name="over_a_billion">Более миллиарда</string>
     <string name="remove">Удалить</string>
     <string name="post_text">Введите текст</string>
     <string name="Edit">Редактировать</string>
-    <string name="EmptyContent">Поле не может быть пустым</string> />
+    <string name="EmptyContent">Поле не может быть пустым</string>
+    <string name="chooser_share_post">Поделиться</string>/>
+    <string name="error_empty_content">Поле не может быть пустым</string>
+    <string name="add_post">Добавить</string>
 
 
 </resources>

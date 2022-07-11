@@ -70,11 +70,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
         Post(
             id = nextId++,
             author = "Нетология. Университет интернет-профессий будущего",
-            content = "Таймбоксинг — отличный способ навести порядок в своём календаре и разобраться с делами, которые долго откладывали на потом. Его главный принцип — на каждое дело заранее выделяется определённый отрезок времени. В это время вы работаете только над одной задачей, не переключаясь на другие. Собрали советы, которые помогут внедрить таймбоксинг \uD83D\uDC47\uD83C\uDFFB",
+            content = "Хорошая песня, послушайте!",
             published = "22 сентября в 10:12",
             likeByMe = false,
             likesCount = 44,
-            shareCount = 2
+            shareCount = 2,
+            videoContent ="https://www.youtube.com/watch?v=j1zBEWyBJb0&list=RDj1zBEWyBJb0&start_radio=1"
         ),
         Post(
             id = nextId++,
@@ -88,11 +89,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
         Post(
             id = nextId++,
             author = "Нетология. Университет интернет-профессий будущего",
-            content = "Освоение новой профессии — это не только открывающиеся возможности и перспективы, но и настоящий вызов самому себе. Приходится выходить из зоны комфорта и перестраивать привычный образ жизни: менять распорядок дня, искать время для занятий, быть готовым к возможным неудачам в начале пути. В блоге рассказали, как избежать стресса на курсах профпереподготовки → http://netolo.gy/fPD",
+            content = "Видео, что надо",
             published = "23 сентября в 10:12",
             likeByMe = false,
             likesCount = 32,
-            shareCount = 46
+            shareCount = 46,
+            videoContent = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
     ).reversed()
 
@@ -124,7 +126,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun savePost(post: Post) {
-       
+
         if (post.id == 0L) createPost(post) else updatePost(post)
     }
 

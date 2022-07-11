@@ -62,13 +62,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginTop="@dimen/common_spacing"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="@dimen/common_spacing"
         android:autoLink="web"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@id/video_preview_view"
         tools:text="@sample/posts.json/data/content" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -82,11 +82,11 @@
         android:id="@+id/views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/common_spacing"
         android:contentDescription="@string/description_post_views_button"
+        app:layout_constraintBottom_toBottomOf="@id/share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/share"
-        app:layout_constraintBottom_toBottomOf="@id/share"
-        android:layout_marginEnd="@dimen/common_spacing"
         app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
 
     <com.google.android.material.button.MaterialButton
@@ -94,12 +94,12 @@
         style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checkable="true"
         android:contentDescription="@string/description_post_likes_button"
         app:icon="@drawable/ic_like_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_bot"
-        tools:text="@sample/posts.json/data/likes"
-        android:checkable="true"/>
+        tools:text="@sample/posts.json/data/likes" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/share"
@@ -111,6 +111,50 @@
         app:icon="@drawable/ic_baseline_share_24"
         app:layout_constraintStart_toEndOf="@id/likes"
         app:layout_constraintTop_toTopOf="@id/likes" />
+
+    <ImageView
+        android:id="@+id/video_preview_view"
+        android:layout_width="0dp"
+        android:layout_height="280dp"
+        android:contentDescription="@string/description_post_views_button"
+        app:layout_constraintBottom_toTopOf="@id/content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/barrier"
+        tools:srcCompat="@mipmap/youtobe_banner_foreground" />
+
+    <TextView
+        android:id="@+id/url_video_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:autoLink="web"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/video_preview_view"
+        tools:text="URL" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play_media_button_view"
+        style="@style/Widget.AppTheme.PlayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_play_youtoube_button"
+        app:layout_constraintBottom_toBottomOf="@id/video_preview_view"
+        app:layout_constraintEnd_toEndOf="@id/video_preview_view"
+        app:layout_constraintStart_toStartOf="@id/video_preview_view"
+        app:layout_constraintTop_toTopOf="@id/video_preview_view"
+        app:srcCompat="@drawable/ic_play_youtube24dp" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/video_view_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="video_preview_view, url_video_view,play_media_button_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

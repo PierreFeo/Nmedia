@@ -1,19 +1,13 @@
 package ru.netology.nmedia
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.viewModelScope
+import androidx.appcompat.app.AppCompatActivity
+import ru.netology.nmedia.activity.NewPostActivity
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
-import ru.netology.nmedia.logics.Logics
-import ru.netology.nmedia.util.focusAndShowKeyboard
-import ru.netology.nmedia.util.hideKeyboard
-import ru.netology.nmedia.util.showKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -30,50 +24,43 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-        binding.saveButton.setOnClickListener {
-            with(binding.editContent) {
-                if (text.isNullOrBlank()) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        R.string.EmptyContent,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                viewModel.onSaveClicked(binding.editContent.text.toString())
-                setText("")
-                clearFocus()
-                hideKeyboard()
-                binding.editConstraintLayout.visibility = View.GONE
+        val activityLauncher =
+            registerForActivityResult(NewPostActivity.PostResultContract) { result: String? ->
+                result ?: return@registerForActivityResult
+                viewModel.onSaveClicked(result)
             }
+
+        viewModel.postContentToScreenEvent.observe(this) {
+            activityLauncher.launch(it.content)
         }
 
-        viewModel.currentPost.observe(this) { post ->
-            if (post == null) {
-                return@observe
+        viewModel.shareEvent.observe(this) {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, it.content)
             }
-            with(binding.editContent) {
-                requestFocus()
-                setText(post.content)
-                setSelection(length())
-                focusAndShowKeyboard()
+            val shareIntent =
+                Intent.createChooser(intent, getString(R.string.chooser_share_post))
+            startActivity(shareIntent)
+        }
 
 
-                with(binding) {
-                    editConstraintLayout.visibility = View.VISIBLE
-                    textPost.text = post.content
+        viewModel.videoClickedEvent.observe(this) {
+            it.videoContent ?: return@observe
+            val newIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(it.videoContent)
+            )
+            startActivity(newIntent)
+        }
 
-                    closeButton.setOnClickListener {
-                        viewModel.onCloseClicked()
-                        editConstraintLayout.visibility = View.GONE
-                        editContent.setText("")
-                        hideKeyboard()
-                        clearFocus()
-                    }
-                }
 
-            }
+        binding.fab.setOnClickListener {
+            activityLauncher.launch("")
         }
     }
-}
 
+
+}
 

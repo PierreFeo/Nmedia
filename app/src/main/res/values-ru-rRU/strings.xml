@@ -19,6 +19,7 @@
     <string name="chooser_share_post">Поделиться</string>/>
     <string name="error_empty_content">Поле не может быть пустым</string>
     <string name="add_post">Добавить</string>
+    <string name="message_deleted">Сообщение удалено</string>
 
 
 </resources>

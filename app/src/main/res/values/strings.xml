@@ -17,6 +17,7 @@
     <string name="EmptyContent">Content cannot be empty</string>
     <string name="chooser_share_post">Share post</string>
     <string name="error_empty_content">Content can\'t be empty</string>
+    <string name="message_deleted">Message deleted</string>
     <string name="add_post">Add post</string>
     />
 

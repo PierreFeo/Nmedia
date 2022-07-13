@@ -28,21 +28,22 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
     PostInteractionLisiner {
 
     private val repository: PostRepository = PostRepositoryFileImpl(application)
-    val shareEvent = SingleLiveEvent<Post>()
+    val sharePostEvent = SingleLiveEvent<Post>()
     val currentPost = MutableLiveData<Post?>(null)
     val data = repository.getAll()
     val videoClickedEvent = SingleLiveEvent<Post>()
-    val postContentToScreenEvent = SingleLiveEvent<Post>()
-
+    val editPostEvent = SingleLiveEvent<Post>()
+    val testPostEvent = SingleLiveEvent<Post>()
 
     override fun onLikeClicked(post: Post) = repository.likePostById(post.id)
 
     override fun onShareClicked(post: Post) {
-        shareEvent.value = post
+        sharePostEvent.value = post
         repository.sharePostById(post.id)
     }
 
     override fun onRemoveClicked(post: Post) = repository.removePostById(post.id)
+
     override fun onSaveClicked(content: String) {
         if (content.isBlank()) return
         val newPost = currentPost.value?.copy(content = content) ?: empty.copy(content = content)
@@ -53,7 +54,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        postContentToScreenEvent.value = post
+        editPostEvent.value = post
     }
 
     override fun onCloseClicked() {
@@ -63,4 +64,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
     override fun onVideoClicked(post: Post) {
         videoClickedEvent.value = post
     }
+
+    override fun onPostClicked(post: Post) {
+        testPostEvent.value = post
+    }
+
 }

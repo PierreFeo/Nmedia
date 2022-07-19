@@ -75,6 +75,8 @@ class PostViewHolder(
         share.setOnClickListener { lisiner.onShareClicked(post) }
         playMediaButtonView.setOnClickListener { lisiner.onVideoClicked(post) }
         videoPreviewView.setOnClickListener { lisiner.onVideoClicked(post) }
+        root.setOnClickListener { lisiner.onPostClicked(post) }
+
 
 
 

@@ -33,6 +33,7 @@ class NewPostFragment : Fragment() {
                 if (!binding.edit.text.isNullOrBlank()) {
                     val text = binding.edit.text.toString()
                     viewModel.onSaveClicked(text)
+
                 }
                 findNavController().navigateUp()
             }
@@ -40,6 +41,7 @@ class NewPostFragment : Fragment() {
         }
 
     }
+
 }
 
 

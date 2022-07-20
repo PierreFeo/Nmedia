@@ -3,12 +3,11 @@ package ru.netology.nmedia.db
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import androidx.lifecycle.Transformations.map
 import ru.netology.nmedia.data.Post
 
-class MyDbManagerImpl(
+class PostDaoImpl(
     private val db: SQLiteDatabase
-) : MyDbManager {
+) : PostDao {
 
 
     override fun getAll(): List<Post> {
@@ -25,40 +24,22 @@ class MyDbManagerImpl(
         return posts
     }
 
+
     override fun save(post: Post): Post {
-        val values = ContentValues().apply {
-            put(PostsTable.Column.AUTHOR.columnName, post.author)
-            put(PostsTable.Column.CONTENT.columnName, post.content)
-            put(PostsTable.Column.PUBLISHED.columnName, post.published)
-            put(PostsTable.Column.LIKE_BY_ME.columnName, post.likeByMe)
-            put(PostsTable.Column.LIKES_COUNT.columnName, post.likesCount)
-            put(PostsTable.Column.SHARE_COUNT.columnName, post.shareCount)
-            put(PostsTable.Column.VIDEO_CONTENT.columnName, post.videoContent)
-        }
-        val id = if (post.id != 0L) {
-            db.update(
-                PostsTable.TABLE_NAME,
-                values,
-                "${PostsTable.Column.ID.columnName}=?",
-                arrayOf(post.id.toString())
-            )
-            post.id
-        } else {
-            db.insert(PostsTable.TABLE_NAME, null, values)
-        }
         return db.query(
             PostsTable.TABLE_NAME,
             PostsTable.ALL_COLUMNS_NAMES,
             "${PostsTable.Column.ID.columnName}=?",
-            arrayOf(post.id.toString()),
+            arrayOf(
+                if (post.id != 0L) updatePostInBd(post).toString()
+                else createPostInBd(post).toString()
+            ),
             null, null, null
         ).use { cursor ->
             cursor.moveToNext()
             cursor.toPost()
         }
-
     }
-
 
     override fun likeById(id: Long) {
         db.execSQL(
@@ -100,5 +81,33 @@ class MyDbManagerImpl(
         shareCount = getInt(getColumnIndexOrThrow(PostsTable.Column.SHARE_COUNT.columnName)),
         videoContent = getString(getColumnIndexOrThrow(PostsTable.Column.VIDEO_CONTENT.columnName))
     )
+
+
+    private fun updatePostInBd(post: Post): Long {
+        db.update(
+            PostsTable.TABLE_NAME,
+            values(post),
+            "${PostsTable.Column.ID.columnName}=?",
+            arrayOf(post.id.toString())
+        )
+        return post.id
+    }
+
+    private fun createPostInBd(post: Post): Long {
+        val newId = db.insert(PostsTable.TABLE_NAME, null, values(post))
+        return newId
+    }
+
+    private fun values(post: Post): ContentValues {
+        return ContentValues().apply {
+            put(PostsTable.Column.AUTHOR.columnName, post.author)
+            put(PostsTable.Column.CONTENT.columnName, post.content)
+            put(PostsTable.Column.PUBLISHED.columnName, post.published)
+            put(PostsTable.Column.LIKE_BY_ME.columnName, post.likeByMe)
+            put(PostsTable.Column.LIKES_COUNT.columnName, post.likesCount)
+            put(PostsTable.Column.SHARE_COUNT.columnName, post.shareCount)
+            put(PostsTable.Column.VIDEO_CONTENT.columnName, post.videoContent)
+        }
+    }
 
 }

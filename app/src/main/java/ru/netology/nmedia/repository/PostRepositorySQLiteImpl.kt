@@ -3,21 +3,21 @@ package ru.netology.nmedia.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.Post
-import ru.netology.nmedia.db.MyDbManager
+import ru.netology.nmedia.db.PostDao
 
-class PostRepositorySQLiteImpl(private val dbManager: MyDbManager) : PostRepository {
+class PostRepositorySQLiteImpl(private val dao: PostDao) : PostRepository {
     private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
 
     init {
-       posts = dbManager.getAll()
+       posts = dao.getAll()
         data.value = posts
     }
 
     override fun getAll(): LiveData<List<Post>> = data
 
     override fun likePostById(id: Long) {
-        dbManager.likeById(id)
+        dao.likeById(id)
         posts = posts.map {
             if (it.id != id) it else it.copy(
                 likeByMe = !it.likeByMe,
@@ -29,7 +29,7 @@ class PostRepositorySQLiteImpl(private val dbManager: MyDbManager) : PostReposit
 
 
     override fun sharePostById(id: Long) {
-       dbManager.sharePostById(id)
+       dao.sharePostById(id)
         posts = posts.map {
             if (it.id == id) it.copy(shareCount = it.shareCount + 1) else it
         }
@@ -37,7 +37,7 @@ class PostRepositorySQLiteImpl(private val dbManager: MyDbManager) : PostReposit
     }
 
     override fun removePostById(id: Long) {
-        dbManager.removeById(id)
+        dao.removeById(id)
         posts = posts.filter { it.id != id }
         data.value = posts
     }
@@ -48,7 +48,7 @@ class PostRepositorySQLiteImpl(private val dbManager: MyDbManager) : PostReposit
     }
 
     private fun createPost(post: Post) {
-        val saved = dbManager.save(post)
+        val saved = dao.save(post)
         posts = listOf(
             saved
         ) + posts
@@ -57,7 +57,7 @@ class PostRepositorySQLiteImpl(private val dbManager: MyDbManager) : PostReposit
 
     private fun updatePost(post: Post) {
         posts = posts.map {
-            if (it.id != post.id) it else dbManager.save(post)
+            if (it.id != post.id) it else dao.save(post)
         }
         data.value = posts
 

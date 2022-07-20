@@ -1,18 +1,12 @@
 package ru.netology.nmedia.viewmodel
 
 import android.app.Application
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostInteractionLisiner
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositoryFileImpl
-import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
 import ru.netology.nmedia.repository.PostRepositorySQLiteImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 
@@ -30,7 +24,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
     PostInteractionLisiner {
 
     private val repository: PostRepository =
-        PostRepositorySQLiteImpl(dbManager = AppDb.getInstance(context = application).dbManager)
+        PostRepositorySQLiteImpl(dao = AppDb.getInstance(context = application).postDao)
     val sharePostEvent = SingleLiveEvent<Post>()
     val currentPost = MutableLiveData<Post?>(null)
     val data = repository.getAll()

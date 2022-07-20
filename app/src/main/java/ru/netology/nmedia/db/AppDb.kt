@@ -2,10 +2,9 @@ package ru.netology.nmedia.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.netology.nmedia.db.PostsTable.DDL
 
 class AppDb private constructor(db: SQLiteDatabase) {
-    val dbManager: MyDbManager = MyDbManagerImpl(db)
+    val postDao: PostDao = PostDaoImpl(db)
 
     companion object {
         @Volatile

@@ -7,7 +7,7 @@ import ru.netology.nmedia.adapter.PostInteractionLisiner
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositorySQLiteImpl
+import ru.netology.nmedia.repository.PostRepositoryRoomImplImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 
 private val empty = Post(
@@ -24,7 +24,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
     PostInteractionLisiner {
 
     private val repository: PostRepository =
-        PostRepositorySQLiteImpl(dao = AppDb.getInstance(context = application).postDao)
+        PostRepositoryRoomImplImpl(dao = AppDb.getInstance(context = application).postDao)
     val sharePostEvent = SingleLiveEvent<Post>()
     val currentPost = MutableLiveData<Post?>(null)
     val data = repository.getAll()
@@ -46,7 +46,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application),
         val newPost = currentPost.value?.copy(content = content) ?: empty.copy(content = content)
         repository.savePost(newPost)
         currentPost.value = null
-
     }
 
     override fun onEditClicked(post: Post) {

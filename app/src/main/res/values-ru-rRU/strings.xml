@@ -20,6 +20,8 @@
     <string name="error_empty_content">Поле не может быть пустым</string>
     <string name="add_post">Добавить</string>
     <string name="message_deleted">Сообщение удалено</string>
-
-
+    <string name="google_play_unavailable">Google Api Недоступно</string>
+    <string name="notification_user_liked">%1$s поставил лайк посту %2$s</string>
+    <string name="channel_remote_name">Уведомления с сервера</string>
+    <string name="channel_remote_description">Уведомления с удалённого сервера</string>
 </resources>

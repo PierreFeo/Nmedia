@@ -43,10 +43,3 @@ class NewPostFragment : Fragment() {
     }
 
 }
-
-
-
-
-
-
-

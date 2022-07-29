@@ -3,6 +3,8 @@ package ru.netology.nmedia.logics
 import android.content.res.Resources
 
 import ru.netology.nmedia.R
+import ru.netology.nmedia.data.Post
+import ru.netology.nmedia.entity.PostEntity
 
 object Logics {
 
@@ -23,5 +25,26 @@ object Logics {
 //    fun likesIcon(liked: Boolean) =
 //        if (liked) R.drawable.ic_baseline_favorite_24
 //        else R.drawable.ic_baseline_favorite_border_24
+
+    fun PostEntity.toPost() = Post(
+        id = id,
+        author = author,
+        content = content,
+        published = published,
+        likeByMe = likeByMe,
+        likesCount = likesCount,
+        shareCount = shareCount,
+        videoContent = videoContent
+    )
+     fun Post.toPostEntity() = PostEntity(
+        id = id,
+        author = author,
+        content = content,
+        published = published,
+        likeByMe = likeByMe,
+        likesCount = likesCount,
+        shareCount = shareCount,
+        videoContent = videoContent
+    )
 
 }
